@@ -1,0 +1,12 @@
+public class TesteListaDuplo {
+	
+	public static void main (String ... args){
+		ListaNoDuplo<String> lista= new ListaNoDuplo<String>(); 
+		lista.add("america");
+		lista.add("jonata");
+		lista.add("zezo");
+		lista.add("americo");
+		lista.add("gato");
+	}
+		
+}
