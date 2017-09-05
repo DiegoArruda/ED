@@ -1,0 +1,92 @@
+import java.util.Arrays;
+
+
+public class ListaArray implements TADLista {
+	Object[] Array = new Object[10] ;
+	int elements = 0;
+	
+	public void printElements() {
+		System.out.println("[" + Arrays.toString(Array) + "]");
+	}
+
+	int qElements = 0;
+	
+	public void add(Object o) {
+		if (qElements < Array.length) {
+			for (int i = 0; i <= qElements; i++) {
+				Array[qElements] = o;
+			}
+			qElements++;
+		} else{
+			growList();
+			for (int i = 0; i <= qElements; i++) {
+				Array[qElements] = o;
+			}
+			qElements++;
+		}
+		organize();
+		
+	}
+	
+	public boolean contains(Object o) {
+		for (int i = 0; i < qElements; i++) {
+			if (Array[i] == o) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int indexOf(Object a) {
+		for (int i = 0; i < qElements; i++) {
+			if (Array[i] == a) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+
+	public boolean remove(Object o) {
+		for (int i = 0; i < qElements; i++) {
+			if (Array[i] == o) {
+				Array[i] = null;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void organize() {
+		String yen;
+		for (int i = 0; i < qElements - 1; i++) {
+			if (((String) Array[i]).compareToIgnoreCase((String) Array[i + 1]) > 1) {
+				yen = (String)Array[i];
+				Array[i] = Array[i + 1];
+				Array[i + 1] =  yen;
+			}
+		}
+	}
+
+	public int size() {
+		return qElements;
+	}
+
+
+
+	public void growList() {
+		int size = Array.length;
+		if (qElements == Array.length) {
+			ListaArray yen = new ListaArray();
+			for (int i = 0; i < qElements; i++) {
+				yen.Array[i] = Array[i];
+			}
+			size = size * 2;
+			Array = new Object[size];
+			for (int j = 0; j < qElements; j++) {
+				Array[j] = yen.Array[j];
+			}
+		}
+	}
+
+	
