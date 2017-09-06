@@ -102,5 +102,22 @@ ublic class ListaNoDuploDinamico<T> implements TADLista<T> {
 		return quantidade;
 		
 	}
+	
+	public void printElementos() {
+		
+		NoDuplo<T> n = inicio;
+		System.out.printf("[");
+		
+		for(int i = 0; i<quantidade; i++){
+			if(n == null){
+				break;
+			}
+			else if(n.getElemento() != null){
+				System.out.printf(" "+n.getElemento());
+			}
+			n = n.getProximoNo();
+		}
+		System.out.println(" ]");
+	}
 
 }
