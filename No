@@ -21,3 +21,4 @@ private	Comparable<T> elemento;
 		this.anterior = anterior;
 	}
 }
+
