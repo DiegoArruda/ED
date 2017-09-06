@@ -1,0 +1,119 @@
+import java.util.Arrays;
+
+public class ListaArrayEstatico<T> implements TADLista<T> {
+private T[] elementos;
+private int quantidade;
+
+public ListaArrayEstatico(int tamanho){
+	this.elementos = (T[]) new Comparable[tamanho];
+	this.quantidade = 0;
+}
+	@Override
+	public void add(T a) {
+		Comparable AUX;
+		AUX = (Comparable) a;
+		int i;
+
+		if (this.quantidade < elementos.length) {
+
+			this.elementos[this.quantidade] = a;
+			this.quantidade++;
+			
+	
+			if (this.quantidade > 1) {
+				
+				for (i = quantidade - 1; i > 0; i--) {
+
+					if (AUX.compareTo(elementos[i - 1]) < 0) {
+
+						T aux;
+						aux = elementos[i - 1];
+						elementos[i - 1] = elementos[i];
+						elementos[i] = aux;
+					}
+				}
+			}
+
+		} else {
+			
+			throw new RuntimeException("A Lista esta cheia!");
+		}
+	}
+
+		
+	
+
+	@Override
+	public boolean contains(T a) {
+		if (indexOf(a) != -1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int indexOf(T a) {
+		
+		int r = -1;
+		int left = 0, right = this.quantidade - 1, meio;
+		Comparable AUX;
+		AUX = (Comparable) a;
+		
+		while(left <= right) {
+			meio = (left + right)/2;
+			if(this.elementos[meio].equals(a)) {
+				r = meio;
+				break;
+				
+			} else if (AUX.compareTo(this.elementos[meio]) < 0) {
+	
+				right = meio - 1;
+				
+			} else {
+				
+				left = meio + 1;
+			}
+			
+		}
+		
+		return r;
+		
+	}
+
+
+	@Override
+	public boolean remove(T a) {
+		boolean r = false;
+		Comparable AUX;
+		AUX = (Comparable) a;
+		int indexElemento = indexOf(a);
+
+		if (indexElemento != -1) {
+			if (AUX.compareTo(this.elementos[indexElemento]) == 0) {
+
+				while (indexElemento < this.quantidade - 1) {
+					this.elementos[indexElemento] = elementos[indexElemento + 1];
+					indexElemento++;
+				}
+				this.quantidade--;
+				elementos[this.quantidade] = null;
+				r = true;
+			}
+
+			
+		}
+		return r;
+	}
+
+	@Override
+	public int size() {
+		
+		return this.quantidade;
+	}
+	
+	public String toString() {
+		return "Lista elementos = " + Arrays.toString(elementos);
+	}
+
+}
