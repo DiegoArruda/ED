@@ -1,0 +1,23 @@
+public class NoDuplo<T> {
+	private	Comparable<T> elemento;
+	private NoDuplo<T> proximoNo;
+	private NoDuplo<T> anterior;
+	public Comparable<T> getElemento() {
+		return elemento;
+	}
+	public void setElemento(Comparable<T> elemento) {
+		this.elemento = elemento;
+	}
+	public NoDuplo<T> getProximoNo() {
+		return proximoNo;
+	}
+	public void setProximoNo(NoDuplo<T> proximoNo) {
+		this.proximoNo = proximoNo;
+	}
+	public NoDuplo<T> getAnterior() {
+		return anterior;
+	}
+	public void setAnterior(NoDuplo<T> anterior) {
+		this.anterior = anterior;
+	}
+}
