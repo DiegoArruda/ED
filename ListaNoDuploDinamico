@@ -1,0 +1,106 @@
+ublic class ListaNoDuploDinamico<T> implements TADLista<T> {
+	private NoDuplo<T> inicio;
+	private int quantidade;
+	@SuppressWarnings("unchecked")
+	@Override
+	public void add(T a) {
+		NoDuplo<T> novoNo = new NoDuplo<T>();
+		novoNo.setElemento((Comparable<T>)a);
+		if(inicio == null ){
+			inicio = novoNo;
+		}
+		else {
+			NoDuplo<T> noAUX = inicio;
+			while (noAUX.getProximoNo()!=null){
+				if(noAUX.getElemento().compareTo((T)a)<=-1 & noAUX.getProximoNo().getElemento().compareTo((T)a)>=1){
+					novoNo.setProximoNo(noAUX.getProximoNo());
+					novoNo.setAnterior(noAUX);
+					noAUX.getProximoNo().setAnterior(novoNo);
+					noAUX.setProximoNo(novoNo);
+					break;
+				}
+				
+			noAUX = noAUX.getProximoNo();
+			}
+			if (noAUX.getProximoNo()== null & noAUX.getElemento().compareTo((T)a)<=-1){
+				novoNo.setAnterior(noAUX);
+				noAUX.setProximoNo(novoNo);
+			}
+			else if(noAUX.getProximoNo()== null & noAUX.getElemento().compareTo((T)a)>=1){
+				novoNo.setProximoNo(inicio);
+				inicio.setAnterior(novoNo);
+				inicio = novoNo;
+			}
+		}
+		quantidade ++;
+		
+	}
+
+	@Override
+	public boolean contains(T a) {
+		boolean r = false;
+		NoDuplo<T> n = inicio;
+		for (int i = 0; i < quantidade; i++) {
+			if (a.equals(n.getElemento())) {
+				r = true;
+				break;
+			}
+			n = n.getProximoNo();
+		}
+		return r;
+	}
+
+	@Override
+	public int indexOf(T a) {
+		int index = -1;
+		NoDuplo<T> n = inicio;
+		for(int i = 0; i < quantidade; i++){
+			if(a.equals(n.getElemento())){
+				index = i;
+			}
+			n = n.getProximoNo();
+		}
+		return index;
+	}
+
+	@Override
+	public boolean remove(T a) {
+		boolean r = false;
+		if (inicio != null) {
+			if (inicio.getElemento().equals(a)) {
+				inicio = inicio.getProximoNo();
+				quantidade--;
+				r = true;
+			} else {
+				NoDuplo<T> n = inicio;
+				NoDuplo<T> AUX;
+				for (int i = 0; i < quantidade - 1; i++) {
+					if (a.equals(n.getProximoNo().getElemento())) {
+						r = true;
+						AUX = n.getProximoNo().getProximoNo();
+						if (AUX == null) {
+							n.setProximoNo(null);
+							quantidade--;
+							break;
+						}
+						n.setProximoNo(AUX);
+						AUX.setAnterior(n);
+						quantidade--;
+						break;
+					}
+					n = n.getProximoNo();
+				}
+			}
+		}
+		return r;
+	}
+
+	
+
+	@Override
+	public int size() {
+		return quantidade;
+		
+	}
+
+}
