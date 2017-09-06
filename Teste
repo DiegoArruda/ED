@@ -1,0 +1,39 @@
+import listas.ListaArrayEstatico;
+import listas.ListaNoDuploDinamico;
+public class Teste {
+
+	public static void main(String[] args) {
+		ListaArrayEstatico<String> list1 = new ListaArrayEstatico<>(5);
+		ListaNoDuploDinamico<String> list2 = new ListaNoDuploDinamico<>();
+        list1.add("Leão");
+        list1.add("Daniel");
+        list1.add("Paulo");
+        list1.add("Aline");
+        list1.add("Renato");
+        
+        
+        System.out.println("Indice do elemento 4 = " + list1.indexOf("4"));
+		System.out.println("A lista contem o elemento " + list1.contains("Daniel"));
+		System.out.println("O item 2 foi removido: " + list1.remove("Paulo"));
+		System.out.println("Quantidade de elementos na lista atualmente = " + list1.size());
+		System.out.printf("\n\n\n");
+		
+		list2.add("Diego");
+		list2.add("Glicia");
+		list2.add("Adam");
+		list2.add("Byron");
+	
+		
+		System.out.println("O elemento Diego existe na lista = " + list2.contains("Diego"));
+		System.out.println("O elemento Byron é o " + list2.indexOf("Byron") + "º elemento na lista!");
+		System.out.println("Quantidade de elementos da lista = " + list2.size());
+		System.out.println("Elemento removido = " + list2.remove("Adam"));
+		System.out.println("Quantidade de elementos atualmente = " + list2.size());
+		list2.printElementos(); 
+		
+		
+	}
+
+	}
+
+
