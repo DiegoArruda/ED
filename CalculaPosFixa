@@ -1,0 +1,34 @@
+public class CalculaPosFixa {	
+	public Object resolverExpressao(String expressão){
+		PilhaDinamica pilha = new PilhaDinamica();
+		Float a, b, resultado, c;
+		String[] format = expressão.split("\\s");
+		for (int i = 0; i < format.length; i++) {
+				if (format[i].equals("+")) {
+					a = (Float) pilha.pop();
+					b = (Float) pilha.pop();
+					resultado = a + b;
+					pilha.push(resultado);
+				} else if (format[i].equals("-")) {
+					a = (Float) pilha.pop();
+					b = (Float) pilha.pop();
+					resultado = b - a;
+					pilha.push(resultado);
+				} else if (format[i].equals("*")) {
+					a = (Float) pilha.pop();
+					b = (Float) pilha.pop();
+					resultado = a * b;
+					pilha.push(resultado);
+				} else if (format[i].equals("/")) {
+					a = (Float) pilha.pop();
+					b = (Float) pilha.pop();
+					resultado = b / a;
+					pilha.push(resultado);
+				} else {
+					c = Float.parseFloat(format[i]);
+					pilha.push(c);
+				}
+		}
+		return (Float) pilha.pop();
+	}
+}
