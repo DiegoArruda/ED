@@ -1,0 +1,141 @@
+public class BinarySortedTree<T> implements TADTree<Comparable> {
+
+	private BinarySortedNode<Comparable> raiz;
+	private int quantidade;
+	
+	public void add(Comparable o) {
+		if (raiz != null) {
+			BinarySortedNode<Comparable> novo = new BinarySortedNode<Comparable>();
+			novo.setElemento(o);
+			BinarySortedNode<Comparable> p = raiz;
+			while (p != null) {
+				if (p.getElemento().equals(o)) {
+					break;
+				} else if (p.getElemento().compareTo(o) < 0) {
+					if (p.getRight() != null)
+						p = p.getRight();
+					else {
+						p.setRight(novo);
+						quantidade++;
+						break;
+					}
+				} else {
+					if (p.getLeft() != null)
+						p = p.getLeft();
+					else {
+						p.setLeft(novo);
+						quantidade++;
+						break;
+					}
+				}
+			}
+		} else {
+			BinarySortedNode<Comparable> novo = new BinarySortedNode<Comparable>();
+			novo.setElemento(o);
+			raiz = novo;
+			quantidade++;
+		}
+	}
+
+	public boolean contains(Comparable o) {
+		boolean r = false;
+		if (raiz != null) {
+			BinarySortedNode<Comparable> p = raiz;
+			while (p != null) {
+				if (p.getElemento().equals(o)) {
+					r = true; 
+					break;
+				} else if (p.getElemento().compareTo(o) < 0) {
+					p = p.getRight();
+				} else {
+					p = p.getLeft();
+				}
+			}
+		}
+		return r;
+	}
+
+	public boolean remove(Comparable o) {
+		BinarySortedNode<Comparable> parente = raiz;
+		BinarySortedNode<Comparable> current = raiz;
+		boolean isLeftChild = false;
+		while(current.elemento!=o){
+			parente = current;
+			if(current.elemento>o){
+				isLeftChild = true;
+				current = current.getLeft();
+			}else{
+				isLeftChild = false;
+				current = current.getRight();
+			}
+			if(current ==null){
+				return false;
+			}
+		}
+		//Se está aqui quer dizer que achou um nó
+		//Caso 1: Se o nó não tiver filho
+		if(current.getLeft()==null && current.getRight()==null){
+			if(current==raiz){
+				raiz = null;
+			}
+			if(isLeftChild ==true){
+				parente.setLeft(null);
+			}else{
+				parente.setRight(null);
+			}
+		}
+		//Caso 2 : Se o nó tiver um filho
+		else if(current.getRight()==null){
+			if(current==raiz){
+				raiz = current.getLeft();
+			}else if(isLeftChild){
+				parente.setLeft(current.getLeft());
+			}else{
+				parente.setRight(current.getLeft());
+			}
+		}
+		else if(current.getLeft()==null){
+			if(current==raiz){
+				raiz = current.getRight();
+			}else if(isLeftChild){
+				parente.setLeft(current.getRight());
+			}else{
+				parente.setRight(current.getRight());
+			}
+		}else if(current.getLeft()!=null && current.getRight()!=null){
+			
+			//agora achamos um elemento mínimo na sub-arvore da direita
+			BinarySortedNode<Comparable> sucessor	 = getSuccessor(current);
+			if(current==raiz){
+				raiz = sucessor;
+			}else if(isLeftChild){
+				parente.setLeft(sucessor);
+			}else{
+				parente.setRight(sucessor);
+			}			
+			sucessor.setLeft(current.getLeft());
+		}		
+		return true;		
+	}
+	public BinarySortedNode<Comparable> getSuccessor(BinarySortedNode deleleNode){
+		BinarySortedNode sucessor =null;
+		BinarySortedNode sucessorParente =null;
+		BinarySortedNode current = deleleNode.getRight();
+		while(current!=null){
+			sucessorParente = sucessor;
+			sucessor = current;
+			current = current.getLeft();
+		}
+		//checa se o sucessor tem filho na direita, não tem como ter filho na esquerda
+		//se tiver filho na direita, adiciona ele a esquerda do sucessorParente	
+		if(sucessor!=deleleNode.getRight()){
+			sucessorParente.setLeft(sucessor.getRight());
+			sucessor.setRight(deleleNode.getRight());
+		}
+		return sucessor;
+	}
+	public int size() {
+		return quantidade;
+	}
+	
+}
